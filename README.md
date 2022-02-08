@@ -14,14 +14,18 @@
 Amazon S3 is a storage service offered by amazon which allows storage of any format. The service offers:
 - Scalability
 - Data availability
-- Security
+- Security  
+
+[Back](#table-of-contents)
 
 ## Why use Amazon S3
 Amazon S3 can be used:
 - To access databases on AWS
 - To allow data to be globally available
 - To store any format of data
-- To backup data on more than one server  
+- To backup data on more than one server
+ 
+[Back](#table-of-contents) 
 
 Amazon S3 can also be used as a disaster recovery plan.
 
@@ -37,7 +41,9 @@ Amazon S3 can also be used as a disaster recovery plan.
     - secret access key: **KEY**
     - region name: `eu-west-1`
     - output format: `json`
-  - `aws s3 ls` it should show you the files you have on the service if everything is done correctly
+  - `aws s3 ls` it should show you the files you have on the service if everything is done correctly  
+
+[Back](#table-of-contents)
 
 
 ## Buckets on Amazon S3
@@ -52,6 +58,8 @@ Amazon S3 can also be used as a disaster recovery plan.
   - `aws s3 cp test.txt s3://eng103a-armaan-devops`
 - Copying data from a bucket to ec2:
   - `aws s3 cp s3://eng103a-armaan-devops/test.txt ~`
+
+[Back](#table-of-contents)
 
 ## Using boto3 For Amazon S3
 - First boto3 would have to be install for this pip and python must also be installed:
@@ -93,3 +101,5 @@ while True:
 
 ```
 - You can then run this script by typing `python3 s3.py` in the ec2 instance and make a bucket or remove etc.
+
+[Back](#table-of-contents)
