@@ -99,6 +99,7 @@ while True:
     else:
         print(\n"Please enter from the following optioins please")
 
+Inspired by Zilamo
 ```
 - You can then run this script by typing `python3 s3.py` in the ec2 instance and make a bucket or remove etc.
 
