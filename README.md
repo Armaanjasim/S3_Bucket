@@ -13,6 +13,7 @@
   - [Making A Template](#making-a-template)
   - [Creating An Auto Scaling Group With Load Balancer](#creating-an-auto-scaling-group-with-load-balancer)
     - [Blocker Faced During Creating An Auto Scaling Group](#blocker-faced-during-creating-an-auto-scaling-group)
+  - [Amazon Web Service Networking](#amazon-web-service-networking)
 
 ## What is Amazon S3
 Amazon S3 is a storage service offered by amazon which allows storage of any format. The service offers:
@@ -161,5 +162,23 @@ Inspired by Zilamo
 
 ### Blocker Faced During Creating An Auto Scaling Group
 - Within the user data I was not using the absolute path which did was giving me an eginx error when trying to use the ip address to see if the application was running. This was fixed by using the full path for example "/home/ubuntu/eng103a/app"
+
+[Back](#table-of-contents)
+
+## Amazon Web Service Networking
+- VPC Virtual Private Cloud
+  - Is a secure and isolated private cloud that is within a public cloud. An example would be a crowded restraunt. Although there is people waiting for a table, the table that is reserved will not be given as it has been reserved for someone already.
+- CIDR Block
+  - Classless Inter-Domain Routing(CIDR) block is a way for allocating IP addresses & routing. You will need to specify an IP range when creating a network or route table for example "0.0.0.0" means that it will match to any IP address
+- Internet Gateway
+  - Internet gateway is a highly available VPC component that allows communication between the internet and your VPC. (IPv4, IPv6)
+- Route Table
+  - Contains a set of rules which are refered to as routes that determine what subnet or gateway to direct your traffic. Allows network packets to know where they need to go.
+- Subnets
+  - Is a range of IP addresses in your virtual private cloud. When creating a subnet you specify the IPv4 CIDR block which is a subset of the VPC CIDR block
+- NACLs Network Access Control List (ACL)
+  - Is an optional layer of security for your VPC that acts as a firewall for traffic coming in and out of your subnets
+
+![VPC](VPC.PNG)
 
 [Back](#table-of-contents)
