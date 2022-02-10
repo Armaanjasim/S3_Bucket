@@ -9,6 +9,10 @@
   - [Accessing Amazon S3](#accessing-amazon-s3)
   - [Buckets on Amazon S3](#buckets-on-amazon-s3)
   - [Using boto3 For Amazon S3](#using-boto3-for-amazon-s3)
+  - [What is AutoScaling & Load Balancing](#what-is-autoscaling--load-balancing)
+  - [Making A Template](#making-a-template)
+  - [Creating An Auto Scaling Group With Load Balancer](#creating-an-auto-scaling-group-with-load-balancer)
+    - [Blocker Faced During Creating An Auto Scaling Group](#blocker-faced-during-creating-an-auto-scaling-group)
 
 ## What is Amazon S3
 Amazon S3 is a storage service offered by amazon which allows storage of any format. The service offers:
@@ -102,5 +106,60 @@ while True:
 Inspired by Zilamo
 ```
 - You can then run this script by typing `python3 s3.py` in the ec2 instance and make a bucket or remove etc.
+
+[Back](#table-of-contents)
+
+## What is AutoScaling & Load Balancing
+- Auto scaling is when the computational resources adjust automatically based on the server load.
+  - If the server load is high it will start more servers to handle the load
+  - Once the server load returns back to normal it will shut down the extra servers making this very cost effective
+  - Example of this is a clothing website. This website may receive more traffic during the christmas period and because of this it will auto scale and run more servers, after the christmas period is over they will not want to run all of these servers as it is not cost effective so auto scale will then close servers down according to the traffic.
+- Load Balancing distributes traffic so that it does not go to only one ec2 so it does not get overwhelmed.
+  - The load balance will distribute the traffic between the availability zones that are running.
+- Diagram to explain load balancing:
+
+![ALB](ALB.PNG)
+
+[Back](#table-of-contents)
+
+## Making A Template
+- Under "Instances" click "Launch Templates"
+- Click "create launch template"
+- Enter a template name such as "eng103a-armaan-asg"
+- Tick "Provide guidance"
+- Under "Applications and OS Images"
+  - Click "My AMIs"
+  - Search for the desired AMI
+- Under "Instance Type"
+  - Select t2.micro
+- Under "Key Pair"
+  - Select the correct key pair for example "eng103a"
+- Under "Network Settings"
+  - Select existing security group
+  - choose the one that you use when running the AMI
+
+[Back](#table-of-contents)
+
+## Creating An Auto Scaling Group With Load Balancer
+- Under "Auto Scaling" click "Auto Scaling Groups"
+- Click "create an Auto Scaling group"
+- Enter auto scaling group name such as "eng103a-armaan-asg-app"
+- Then select the template you have just created using the steps above
+- Select the availability zones you would like to use such as "eu-west-1a", "eu-west-1b", "eu-west-1c"
+- After this you will have an option to use a load balancer by either attaching an existing load balancer or attaching a new one. In this case we want to attack a new load balancer
+- Select "Application Load Balancer" as we are using HTTP
+- Name the load balancer such as eng103a-armaan-asg-lb **Remember Do Not Use "_"s As It Will Give You An Error**
+- You then want to select "Internet-Facing"
+- After this create a target group under "Listeners and routing" and name it such as "eng103a-armaan-lb-lg"
+- Tick the ELB box under "Health Checks" and tick the box under "Additional Settings"
+- Select the "Desired Capacity", "Minimum Capacity", "Maximum Capacity" For Example 2,2,3
+- Select "Target Tracking Scaling Policy"
+  - Enter a suitable name 
+  - Choose the metric type as well as the target value For example "Average CPU utilization" and "25"  for the target value
+- Then you can add notifications and tags however it is not needed
+- Finally "Create Auto Scaling Group"
+
+### Blocker Faced During Creating An Auto Scaling Group
+- Within the user data I was not using the absolute path which did was giving me an eginx error when trying to use the ip address to see if the application was running. This was fixed by using the full path for example "/home/ubuntu/eng103a/app"
 
 [Back](#table-of-contents)
