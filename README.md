@@ -14,6 +14,12 @@
   - [Creating An Auto Scaling Group With Load Balancer](#creating-an-auto-scaling-group-with-load-balancer)
     - [Blocker Faced During Creating An Auto Scaling Group](#blocker-faced-during-creating-an-auto-scaling-group)
   - [Amazon Web Service Networking](#amazon-web-service-networking)
+  - [Creating Own VPC On AWS](#creating-own-vpc-on-aws)
+    - [Virtual Private Cloud](#virtual-private-cloud)
+    - [Internet Gateway](#internet-gateway)
+    - [Subnet](#subnet)
+    - [Route Table](#route-table)
+    - [Connecting The Database Instance](#connecting-the-database-instance)
 
 ## What is Amazon S3
 Amazon S3 is a storage service offered by amazon which allows storage of any format. The service offers:
@@ -180,5 +186,58 @@ Inspired by Zilamo
   - Is an optional layer of security for your VPC that acts as a firewall for traffic coming in and out of your subnets
 
 ![VPC](VPC.PNG)
+
+[Back](#table-of-contents)
+
+1. Select A Region "Ireland"
+2. Create VPC (Virtual Private Cloud)
+3. Valid CDIR Block For Our VPC "10.0.0.0/16"
+4. Create Internet Gateway
+5. Attach the Internet Gateway To Our VPC
+6. Create A Public Subnet
+7. Associate Subnet To VPC
+8. Route Table/s For Public
+9. Edit Routes To Allow Internet Gateway
+10. Associate To Our Public Subnet
+11. Create A Security Group In Our Public Subnet To Allow Required Ports/Traffic
+    - Allow Port 80 & 3000 For Our Example
+
+[Back](#table-of-contents)
+
+## Creating Own VPC On AWS  
+
+### Virtual Private Cloud
+- Under `VPC` > `Your VPCs` > Click `Create VPC`
+- Enter A Name For Your VPC `eng103a-armaan-vpc`
+- Enter The CIDR Block `10.0.0.0/16`
+
+### Internet Gateway
+- Under `Internet Gateway` > Click `Create Internet Gateway`
+- Enter A Name For Your Internet Gateway `eng103a-armaan-ig`
+- Click `Actions` > Click `Attach VPC` and attach `eng103a-armaan-vpc`
+
+### Subnet
+- Under `Subnets` > Click `Create Subnet`
+- Select Your VPC `eng103a-armaan-vpc`
+- Enter A Name For Your Subnet `eng103a-armaan-subnet-public`
+- Enter The CIDR Block `10.0.2.0/24`
+
+### Route Table
+- Under `Route Tables` > Click `Create Route Table`
+- Select Your VPC `eng103a-armaan-vpc`
+- Enter A Name For Your Route Table `eng103a-armaan-rt-public`
+- Click `Actions` > `Edit Routes` > `Add Route`
+- Destination `0.0.0.0/0` (Anyone Can Access)
+- Target `eng103a-armaan-subnet-public` (Internet Gateway)
+- Click `Actions` > `Edit Subnet Associations` > Select `eng103a-armaan-ig` (Will Be Shown Different After Selected)
+
+### Connecting The Database Instance
+- Follow The Steps Above But Create A New Subnet:
+  - Subnet Name `eng103a-armaan-subnet-private`
+  - CIDR Block For Subset `10.0.3.0/24`
+- Create A New Route Table:
+  - Route Table Name `eng103a-armaan-rt-private`
+  - No Need To Edit Routes As This Should Not Be Accessed By The Public
+  - Click `Actions` > `Edit Subnet Associations` > Select `eng103a-armaan-ig`
 
 [Back](#table-of-contents)
